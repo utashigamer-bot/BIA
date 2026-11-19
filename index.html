@@ -74,6 +74,17 @@ section[hidden]{display:none}
 .row{display:grid;grid-template-columns:1fr 60px;gap:4px 12px;align-items:center}
 .row .prog{grid-column:1/-1;margin:0}
 .row .prog i{background:var(--ok)}
+details{background:var(--white);border:1px solid var(--line);border-radius:10px;margin:10px 0;max-width:760px}
+summary{padding:14px 18px;font:700 1.35rem "Barlow Condensed",sans-serif;cursor:pointer}
+details .in{padding:0 18px 14px}
+details ul{margin:.3em 0;padding-left:1.2em}details li{margin:.3em 0}
+.wings{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-top:14px}
+.w{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:10px}
+.w svg{display:block;width:100%;background:var(--sky);border-radius:6px;margin-bottom:8px}
+.w path,.w ellipse{fill:#C9D8E6;stroke:#6F93B3;stroke-width:1.5}
+.w .ghost{opacity:.45;stroke-dasharray:3 2}
+.w p{font-size:.92rem;color:var(--muted)}
+.gal{margin-top:34px}
 footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -84,6 +95,7 @@ footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
     <div class="brand"><div class="logo">BIA</div><span>Révisions du Brevet d’initiation aéronautique</span></div>
     <nav aria-label="Sections">
       <button data-tab="maquette">Maquette</button>
+      <button data-tab="cours">Cours</button>
       <button data-tab="quiz">Quiz</button>
       <button data-tab="progression">Progression</button>
     </nav>
@@ -97,8 +109,9 @@ footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
   <p class="lead">Touche une pièce pour savoir à quoi elle sert, ou passe en mode entraînement pour tester ta mémoire.</p>
   <div class="tools">
     <div class="seg" role="group" aria-label="Vue">
-      <button data-view="top" aria-pressed="true">Vue de dessus</button>
-      <button data-view="side" aria-pressed="false">Vue de profil</button>
+      <button data-view="top" aria-pressed="true">Avion léger : dessus</button>
+      <button data-view="side" aria-pressed="false">Avion léger : profil</button>
+      <button data-view="jet" aria-pressed="false">Avion de chasse</button>
     </div>
     <div class="seg" role="group" aria-label="Mode">
       <button data-mode="explore" aria-pressed="true">Explorer</button>
@@ -138,6 +151,24 @@ footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
         <g class="part" data-id="direction" tabindex="0" role="button" aria-label="Gouverne de direction"><polygon points="540,72 562,74 552,152 540,150"/></g>
         <g class="part" data-id="helice" tabindex="0" role="button" aria-label="Hélice"><ellipse cx="64" cy="160" rx="5" ry="62"/></g>
       </svg>
+      <svg class="view" data-view="jet" viewBox="0 0 600 400" role="group" aria-label="Avion de chasse vu de dessus" hidden>
+        <defs>
+          <polygon id="wingJ" points="320,190 505,320 505,342 320,342"/>
+          <polygon id="elevJ" points="340,328 505,328 505,342 340,342"/>
+          <polygon id="canJ" points="320,125 385,165 385,178 320,158"/>
+          <rect id="airJ" x="320" y="150" width="18" height="46" rx="6"/>
+        </defs>
+        <g class="part" data-id="ailedelta" tabindex="0" role="button" aria-label="Aile delta"><use href="#wingJ"/><use href="#wingJ" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="elevon" tabindex="0" role="button" aria-label="Élevon"><use href="#elevJ"/><use href="#elevJ" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="canard" tabindex="0" role="button" aria-label="Canard"><use href="#canJ"/><use href="#canJ" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="fuselage" tabindex="0" role="button" aria-label="Fuselage"><path d="M284 90L316 90L322 250L318 340L282 340L278 250Z"/></g>
+        <g class="part" data-id="entree" tabindex="0" role="button" aria-label="Entrée d’air"><use href="#airJ"/><use href="#airJ" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="nez" tabindex="0" role="button" aria-label="Nez et radar"><path d="M300 30C312 30 316 60 316 90L284 90C284 60 288 30 300 30Z"/></g>
+        <g class="part" data-id="cockpit" tabindex="0" role="button" aria-label="Cabine de pilotage"><ellipse cx="300" cy="126" rx="11" ry="28"/></g>
+        <g class="part" data-id="derive" tabindex="0" role="button" aria-label="Dérive"><rect x="295" y="262" width="10" height="48"/></g>
+        <g class="part" data-id="direction" tabindex="0" role="button" aria-label="Gouverne de direction"><rect x="296" y="310" width="8" height="30"/></g>
+        <g class="part" data-id="tuyere" tabindex="0" role="button" aria-label="Tuyère du réacteur"><polygon points="288,340 312,340 316,372 284,372"/></g>
+      </svg>
     </div>
     <div>
       <div class="panel" id="info" aria-live="polite"></div>
@@ -151,6 +182,62 @@ footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
       </div>
     </div>
   </div>
+<div class="gal">
+    <h2>Les formes d’ailes</h2>
+    <p class="lead">La forme de l’aile dépend de la vitesse et de la mission de l’avion.</p>
+    <div class="wings" id="wings"></div>
+  </div>
+</section>
+
+<!-- COURS -->
+<section id="cours" hidden>
+  <h1>Cours</h1>
+  <p class="lead">Résumé des cinq thèmes du programme officiel du BIA (arrêté du 19 février 2015, BO n° 11 du 12 mars 2015). Complète-les avec ton manuel et ton professeur.</p>
+  <details open><summary>1. Aérodynamique, aérostatique et principes du vol</summary><div class="in"><ul>
+    <li><b>Atmosphère standard</b> : 1013,25 hPa et 15 °C au niveau de la mer ; la température baisse d’environ 6,5 °C par 1000 m.</li>
+    <li><b>Vocabulaire de l’aile</b> : bord d’attaque, bord de fuite, extrados (dessus), intrados (dessous), corde, envergure, surface alaire, emplanture (jonction avec le fuselage), saumon (bout d’aile).</li>
+    <li><b>Incidence</b> : angle entre la corde de l’aile et le vent relatif. Au-delà de l’incidence critique, c’est le décrochage.</li>
+    <li><b>Quatre forces</b> : portance, poids, traction, traînée. En vol horizontal à vitesse constante, portance = poids et traction = traînée.</li>
+    <li><b>Portance</b> : Rz = ½ × ρ × S × V² × Cz (ρ : masse volumique de l’air, S : surface alaire, V : vitesse, Cz : coefficient de portance).</li>
+    <li><b>Trois axes</b> : roulis (ailerons), tangage (profondeur), lacet (direction).</li>
+    <li><b>Aérostatique</b> : un ballon vole grâce à la poussée d’Archimède. L’air chaud d’une montgolfière est moins dense que l’air extérieur ; un ballon à gaz utilise de l’hélium ou de l’hydrogène.</li>
+  </ul></div></details>
+  <details><summary>2. Étude des aéronefs et des engins spatiaux</summary><div class="in"><ul>
+    <li><b>Familles</b> : avions, hélicoptères, planeurs, ULM, aérostats (ballons, dirigeables), drones.</li>
+    <li><b>Parties d’un avion</b> : fuselage, voilure (ailes), empennage, train d’atterrissage, groupe motopropulseur. À l’intérieur de l’aile : longerons, nervures, revêtement.</li>
+    <li><b>Commandes</b> : le manche agit sur la profondeur et les ailerons, le palonnier sur la direction, la manette des gaz sur la puissance. Les volets augmentent la portance à basse vitesse.</li>
+    <li><b>Ailes</b> : droite, trapézoïdale, elliptique, en flèche, delta, à géométrie variable. Un avion à aile delta peut se passer d’empennage horizontal : ses élevons font ailerons et profondeur.</li>
+    <li><b>Moteurs</b> : à pistons (4 temps : admission, compression, combustion-détente, échappement), turbopropulseur, turboréacteur. Une fusée avance par réaction, en éjectant des gaz.</li>
+    <li><b>Instruments de base</b> : anémomètre (vitesse), altimètre, variomètre (vitesse verticale), horizon artificiel, conservateur de cap, indicateur de virage.</li>
+    <li><b>Hélicoptère</b> : le rotor principal donne portance et traction ; le rotor de queue compense la rotation du fuselage (anti-couple).</li>
+    <li><b>Espace</b> : lanceurs (Ariane, tirée de Kourou), satellites, station spatiale. L’orbite géostationnaire se trouve à environ 36 000 km d’altitude.</li>
+  </ul></div></details>
+  <details><summary>3. Météorologie et aérologie</summary><div class="in"><ul>
+    <li><b>Atmosphère</b> : la troposphère (où se forme la météo) va jusqu’à la tropopause, vers 11 km en moyenne, puis vient la stratosphère.</li>
+    <li><b>Pression</b> : elle baisse avec l’altitude. QNH : pression ramenée au niveau de la mer (l’altimètre indique l’altitude). QFE : pression du terrain (l’altimètre indique la hauteur). 1013 : calage standard pour les niveaux de vol.</li>
+    <li><b>Vent</b> : il souffle des hautes pressions (anticyclone, souvent beau temps) vers les basses pressions (dépression, souvent mauvais temps). Sa direction est celle d’où il vient. Unité : le nœud.</li>
+    <li><b>Nuages</b> : cirrus (hauts, en filaments), cumulus, stratus, cumulonimbus (orages, grêle, turbulences).</li>
+    <li><b>Dangers</b> : givrage, orages, turbulences, cisaillement de vent, brouillard.</li>
+    <li><b>Messages</b> : METAR (observation d’un aérodrome), TAF (prévision d’un aérodrome).</li>
+  </ul></div></details>
+  <details><summary>4. Navigation, réglementation et sécurité des vols</summary><div class="in"><ul>
+    <li><b>Caps</b> : nord 000°, est 090°, sud 180°, ouest 270°. Le nord magnétique diffère du nord géographique (déclinaison).</li>
+    <li><b>Unités</b> : 1 mille nautique = 1852 m ; 1 nœud = 1 mille nautique par heure. Distance = vitesse × temps.</li>
+    <li><b>Cartes</b> : au 1/500 000, 1 cm représente 5 km. Position repérée par la latitude et la longitude.</li>
+    <li><b>Règles de l’air</b> : face à face, chacun vire à droite ; en croisement, priorité à l’avion qui vient de la droite ; le dépassement se fait par la droite.</li>
+    <li><b>Espaces aériens</b> : zones interdites (P), réglementées (R), dangereuses (D), contrôlées (CTR, TMA). Vol à vue (VFR) ou aux instruments (IFR).</li>
+    <li><b>Radio et urgence</b> : alphabet OACI (Alpha, Bravo, Charlie…), « Mayday » pour la détresse, « Pan pan » pour l’urgence. Transpondeur : 7700 urgence, 7600 panne radio, 7500 détournement.</li>
+    <li><b>Organismes</b> : OACI (international), EASA (Europe), DGAC (France). Sécurité : visite prévol, check-lists, facteurs humains.</li>
+  </ul></div></details>
+  <details><summary>5. Histoire et culture de l’aéronautique et du spatial</summary><div class="in"><ul>
+    <li><b>1783</b> : premiers vols habités en ballon (montgolfière des frères Montgolfier, puis ballon à hydrogène de Charles).</li>
+    <li><b>1890</b> : Clément Ader décolle avec l’Éole. <b>1903</b> : premier vol motorisé contrôlé des frères Wright. <b>1906</b> : le 14-bis de Santos-Dumont. <b>1909</b> : Blériot traverse la Manche.</li>
+    <li><b>1910</b> : Henri Fabre fait voler le premier hydravion. <b>1914-1918</b> : naissance de l’aviation militaire.</li>
+    <li><b>1927</b> : Lindbergh traverse l’Atlantique Nord en solitaire. Années 1920-1930 : l’Aéropostale, avec Mermoz et Saint-Exupéry.</li>
+    <li><b>1947</b> : Chuck Yeager franchit le mur du son. <b>1957</b> : Spoutnik, premier satellite. <b>1961</b> : Gagarine, premier homme dans l’espace. <b>1969</b> : Armstrong marche sur la Lune.</li>
+    <li><b>1976-2003</b> : Concorde en service commercial. <b>1982</b> : Jean-Loup Chrétien, premier Français dans l’espace. <b>1996</b> : Claudie Haigneré, première Française dans l’espace.</li>
+    <li><b>Acteurs</b> : CNES (1961), agence spatiale européenne ESA (1975), Airbus (1970).</li>
+  </ul></div></details>
 </section>
 
 <!-- QUIZ -->
@@ -202,7 +289,13 @@ const PARTS={
   derive:["Dérive","Stabilité en lacet","Partie fixe verticale de l’empennage. Elle garde l’avion aligné avec le vent relatif."],
   direction:["Gouverne de direction","Commande le lacet","Actionnée par le palonnier, elle fait pivoter le nez à gauche ou à droite."],
   train:["Train principal","Roule au sol","Les roues principales supportent l’essentiel du poids de l’avion au sol, au décollage et à l’atterrissage."],
-  trainavant:["Train avant","Oriente l’avion au sol","La roue avant guide l’avion pendant le roulage."]
+  trainavant:["Train avant","Oriente l’avion au sol","La roue avant guide l’avion pendant le roulage."],
+  ailedelta:["Aile delta","Aile triangulaire","Rigide et efficace à grande vitesse, même supersonique. Elle permet de se passer d’empennage horizontal."],
+  elevon:["Élevon","Roulis et tangage","Gouverne de bord de fuite qui joue à la fois le rôle d’aileron (roulis) et de gouverne de profondeur (tangage)."],
+  canard:["Canard","Petite aile avant","Placé devant l’aile principale, il aide à contrôler le tangage et améliore la maniabilité."],
+  entree:["Entrée d’air","Alimente le réacteur","Elle amène l’air nécessaire au fonctionnement du réacteur, en le ralentissant avant le compresseur."],
+  nez:["Nez et radar","Détection","Le radôme, à l’avant, protège l’antenne du radar tout en laissant passer les ondes."],
+  tuyere:["Tuyère","Éjection des gaz","Les gaz chauds du réacteur sortent par la tuyère à grande vitesse : c’est ce qui produit la poussée."]
 };
 let view="top",mode="explore",queue=[],target=null,hits=0,total=0,missed=false;
 const info=$("#info");
@@ -275,7 +368,16 @@ const Q=[
  [4,"Qui réalise en 1903 le premier vol motorisé contrôlé d’un plus lourd que l’air ?",["Louis Blériot","Alberto Santos-Dumont","Les frères Wright","Clément Ader"],2,"Orville et Wilbur Wright volent le 17 décembre 1903 à Kitty Hawk, aux États-Unis."],
  [4,"En quelle année Louis Blériot traverse-t-il la Manche en avion ?",["1903","1909","1914","1927"],1,"Blériot relie Calais à Douvres le 25 juillet 1909."],
  [4,"En quelle année Charles Lindbergh traverse-t-il l’Atlantique Nord en solitaire et sans escale ?",["1909","1919","1927","1939"],2,"En mai 1927, Lindbergh relie New York à Paris à bord du Spirit of St. Louis."],
- [4,"En quelle année le Concorde commence-t-il ses vols commerciaux ?",["1969","1976","1984","1990"],1,"Le premier vol d’essai date de 1969, mais les vols commerciaux débutent en 1976."]
+ [4,"En quelle année le Concorde commence-t-il ses vols commerciaux ?",["1969","1976","1984","1990"],1,"Le premier vol d’essai date de 1969, mais les vols commerciaux débutent en 1976."],
+ [0,"Pourquoi une montgolfière monte-t-elle quand on chauffe l’air de l’enveloppe ?",["L’air chaud est moins dense que l’air extérieur","L’air chaud est plus lourd","La pression extérieure augmente","L’enveloppe se remplit d’hydrogène"],0,"L’air chaud est moins dense : la poussée d’Archimède devient supérieure au poids de l’ensemble."],
+ [0,"Comment s’appelle la distance entre les deux extrémités des ailes ?",["La corde","L’envergure","L’allongement","L’épaisseur"],1,"L’envergure va d’un saumon à l’autre. La corde va du bord d’attaque au bord de fuite."],
+ [0,"Comment s’appelle la face supérieure d’une aile ?",["L’intrados","L’extrados","La corde","L’emplanture"],1,"L’extrados est le dessus de l’aile, l’intrados le dessous."],
+ [1,"Quelle aile triangulaire équipe le Concorde et le Rafale ?",["L’aile droite","L’aile elliptique","L’aile delta","L’aile à géométrie variable"],2,"L’aile delta est adaptée aux grandes vitesses, y compris supersoniques."],
+ [1,"Sur une aile delta sans empennage horizontal, quelles gouvernes assurent roulis et tangage ?",["Les volets","Les élevons","Le palonnier","Les compensateurs"],1,"Les élevons combinent le rôle des ailerons et celui de la gouverne de profondeur."],
+ [2,"Que décrit un METAR ?",["La prévision à 24 h d’un aérodrome","L’observation météo d’un aérodrome","Le plan de vol","La carte des vents en altitude"],1,"Le METAR donne l’observation en cours ; le TAF donne la prévision."],
+ [3,"Que signifie le code transpondeur 7700 ?",["Panne radio","Détournement","Urgence","Vol d’entraînement"],2,"7700 : urgence, 7600 : panne radio, 7500 : détournement."],
+ [3,"Deux avions se rapprochent face à face. Que fait chaque pilote ?",["Il monte","Il vire à droite","Il vire à gauche","Il réduit les gaz"],1,"Dans les règles de l’air, chaque avion vire à droite."],
+ [4,"Qui est le premier homme dans l’espace, en 1961 ?",["Neil Armstrong","Youri Gagarine","Alan Shepard","Thomas Pesquet"],1,"Youri Gagarine fait un tour de la Terre le 12 avril 1961."]
 ];
 const body=$("#quizBody");
 let run=null;
@@ -321,13 +423,30 @@ function result(){
 /* ---------- Progression ---------- */
 function renderProgress(){
   const p=store.get();
-  const items=[["all","Quiz mélangé"],...CATS.map((c,i)=>["cat"+i,c]),["maquette-top","Maquette : vue de dessus"],["maquette-side","Maquette : vue de profil"]];
+  const items=[["all","Quiz mélangé"],...CATS.map((c,i)=>["cat"+i,c]),["maquette-top","Maquette : avion léger, dessus"],["maquette-side","Maquette : avion léger, profil"],["maquette-jet","Maquette : avion de chasse"]];
   $("#rows").innerHTML=items.map(([k,t])=>{
     const v=p[k];
     return `<div class="row"><b>${t}</b><span>${v>=0?v+" %":"à faire"}</span><div class="prog"><i style="width:${v>=0?v:0}%"></i></div></div>`;
   }).join("");
 }
 $("#reset").onclick=()=>{if(confirm("Effacer toute ta progression ?")){store.set({});renderProgress();quizHome()}};
+
+/* ---------- Formes d’ailes ---------- */
+const WINGS=[
+["Aile droite","M66 38H112V50H66Z","Simple à construire, bon comportement à basse vitesse. Avions d’aéroclub."],
+["Aile trapézoïdale","M66 32L112 44V52L66 54Z","Corde plus grande à l’emplanture qu’en bout d’aile : plus légère et plus solide."],
+["Aile elliptique","M66 35C90 30 112 36 114 46C106 56 86 56 66 54Z","Répartition idéale de la portance, traînée induite minimale. Spitfire. Difficile à fabriquer."],
+["Aile en flèche","M66 38L112 70V76L66 52Z","Retarde les effets de la compressibilité près de la vitesse du son. Avions de ligne."],
+["Aile delta","M66 30L112 78H66Z","Triangulaire, rigide, efficace à grande vitesse. Concorde, Mirage, Rafale."],
+["Géométrie variable","M66 38L112 70V76L66 52Z|M66 38H108V46H66Z","La flèche change en vol : ailes dépliées à basse vitesse, repliées à grande vitesse. Tornado, F-14."]
+];
+$("#wings").innerHTML=WINGS.map(([n,d,t])=>{
+  const ps=d.split("|");
+  const cl=i=>i?" class=ghost":"";
+  return `<div class="w"><svg viewBox="0 0 120 90" role="img" aria-label="${n}"><ellipse cx="60" cy="45" rx="6" ry="40"/>`+
+    ps.map((q,i)=>`<path d="${q}"${cl(i)}/><path d="${q}" transform="matrix(-1 0 0 1 120 0)"${cl(i)}/>`).join("")+
+    `</svg><h3>${n}</h3><p>${t}</p></div>`;
+}).join("");
 
 /* ---------- Démarrage ---------- */
 setView("top");

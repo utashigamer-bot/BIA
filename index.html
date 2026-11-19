@@ -103,6 +103,10 @@ button,summary{min-height:44px}
   .btn{width:100%;margin-bottom:8px}
   .row{grid-template-columns:1fr 56px}
 }
+.part[data-id=feurouge]:not(.on):not(.ok):not(.ko){fill:#E5484D}
+.part[data-id=feuvert]:not(.on):not(.ok):not(.ko){fill:#34B36B}
+.part[data-id=feublanc]:not(.on):not(.ok):not(.ko){fill:#fff}
+.part[data-id=pitot],.part[data-id=antenne],.part[data-id=echappement],.part[data-id=feublanc]{stroke-width:5;stroke-linejoin:round}
 footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
@@ -124,12 +128,13 @@ footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
 <!-- MAQUETTE -->
 <section id="maquette">
   <h1>Maquette d’avion</h1>
-  <p class="lead">Touche une pièce pour savoir à quoi elle sert, ou passe en mode entraînement pour tester ta mémoire.</p>
+  <p class="lead">Touche une pièce pour savoir à quoi elle sert, ou passe en mode entraînement pour tester ta mémoire. Les vues Dessus, Profil et Dessous montrent un avion léger ; la vue Chasseur montre un avion de chasse.</p>
   <div class="tools">
     <div class="seg" role="group" aria-label="Vue">
-      <button data-view="top" aria-pressed="true">Avion léger : dessus</button>
-      <button data-view="side" aria-pressed="false">Avion léger : profil</button>
-      <button data-view="jet" aria-pressed="false">Avion de chasse</button>
+      <button data-view="top" aria-pressed="true">Dessus</button>
+      <button data-view="side" aria-pressed="false">Profil</button>
+      <button data-view="under" aria-pressed="false">Dessous</button>
+      <button data-view="jet" aria-pressed="false">Chasseur</button>
     </div>
     <div class="seg" role="group" aria-label="Mode">
       <button data-mode="explore" aria-pressed="true">Explorer</button>
@@ -187,6 +192,33 @@ footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
         <g class="part" data-id="direction" tabindex="0" role="button" aria-label="Gouverne de direction"><rect x="296" y="310" width="8" height="30"/></g>
         <g class="part" data-id="tuyere" tabindex="0" role="button" aria-label="Tuyère du réacteur"><polygon points="288,340 312,340 316,372 284,372"/></g>
       </svg>
+      <svg class="view" data-view="under" viewBox="0 0 600 400" role="group" aria-label="Avion léger vu de dessous" hidden>
+        <defs>
+          <polygon id="wingU" points="326,150 570,175 570,205 326,215"/>
+          <polygon id="flapU" points="335,200.6 440,196.3 440,210.3 335,214.6"/>
+          <polygon id="ailU" points="450,196 570,191 570,205 450,210"/>
+          <polygon id="stabU" points="322,318 424,334 424,352 316,352"/>
+          <polygon id="elevU" points="317,339 424,343 424,352 316,352"/>
+          <rect id="gearU" x="342" y="176" width="12" height="32" rx="5"/>
+        </defs>
+        <g class="part" data-id="aile" tabindex="0" role="button" aria-label="Aile"><use href="#wingU"/><use href="#wingU" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="volet" tabindex="0" role="button" aria-label="Volet"><use href="#flapU"/><use href="#flapU" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="aileron" tabindex="0" role="button" aria-label="Aileron"><use href="#ailU"/><use href="#ailU" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="stab" tabindex="0" role="button" aria-label="Stabilisateur horizontal"><use href="#stabU"/><use href="#stabU" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="profondeur" tabindex="0" role="button" aria-label="Gouverne de profondeur"><use href="#elevU"/><use href="#elevU" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="fuselage" tabindex="0" role="button" aria-label="Fuselage"><path d="M300 40C318 40 326 70 326 110L326 250L312 360L288 360L274 250L274 110C274 70 282 40 300 40Z"/></g>
+        <g class="part" data-id="capot" tabindex="0" role="button" aria-label="Capot moteur"><path d="M300 40C318 40 326 70 326 112L274 112C274 70 282 40 300 40Z"/></g>
+        <g class="part" data-id="helice" tabindex="0" role="button" aria-label="Hélice"><rect x="264" y="30" width="72" height="8" rx="4"/><circle cx="300" cy="42" r="8"/></g>
+        <g class="part" data-id="train" tabindex="0" role="button" aria-label="Train principal"><use href="#gearU"/><use href="#gearU" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="trainavant" tabindex="0" role="button" aria-label="Train avant"><rect x="295" y="78" width="10" height="26" rx="4"/></g>
+        <g class="part" data-id="echappement" tabindex="0" role="button" aria-label="Échappement"><rect x="307" y="108" width="6" height="22" rx="2"/></g>
+        <g class="part" data-id="antenne" tabindex="0" role="button" aria-label="Antenne"><rect x="297" y="222" width="6" height="26" rx="2"/></g>
+        <g class="part" data-id="pitot" tabindex="0" role="button" aria-label="Tube de Pitot"><rect x="408" y="162" width="5" height="16" rx="2"/></g>
+        <g class="part" data-id="phare" tabindex="0" role="button" aria-label="Phare d’atterrissage"><ellipse cx="205" cy="168" rx="7" ry="5"/></g>
+        <g class="part" data-id="feurouge" tabindex="0" role="button" aria-label="Feu de navigation rouge"><circle cx="562" cy="190" r="7"/></g>
+        <g class="part" data-id="feuvert" tabindex="0" role="button" aria-label="Feu de navigation vert"><circle cx="38" cy="190" r="7"/></g>
+        <g class="part" data-id="feublanc" tabindex="0" role="button" aria-label="Feu blanc arrière"><circle cx="300" cy="354" r="4"/></g>
+      </svg>
     </div>
     <div>
       <div class="panel" id="info" aria-live="polite"></div>
@@ -210,51 +242,53 @@ footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
 <!-- COURS -->
 <section id="cours" hidden>
   <h1>Cours</h1>
-  <p class="lead">Résumé des cinq thèmes du programme officiel du BIA (arrêté du 19 février 2015, BO n° 11 du 12 mars 2015). Complète-les avec ton manuel et ton professeur.</p>
-  <details open><summary>1. Aérodynamique, aérostatique et principes du vol</summary><div class="in"><ul>
-    <li><b>Atmosphère standard</b> : 1013,25 hPa et 15 °C au niveau de la mer ; la température baisse d’environ 6,5 °C par 1000 m.</li>
-    <li><b>Vocabulaire de l’aile</b> : bord d’attaque, bord de fuite, extrados (dessus), intrados (dessous), corde, envergure, surface alaire, emplanture (jonction avec le fuselage), saumon (bout d’aile).</li>
-    <li><b>Incidence</b> : angle entre la corde de l’aile et le vent relatif. Au-delà de l’incidence critique, c’est le décrochage.</li>
-    <li><b>Quatre forces</b> : portance, poids, traction, traînée. En vol horizontal à vitesse constante, portance = poids et traction = traînée.</li>
-    <li><b>Portance</b> : Rz = ½ × ρ × S × V² × Cz (ρ : masse volumique de l’air, S : surface alaire, V : vitesse, Cz : coefficient de portance).</li>
-    <li><b>Trois axes</b> : roulis (ailerons), tangage (profondeur), lacet (direction).</li>
-    <li><b>Aérostatique</b> : un ballon vole grâce à la poussée d’Archimède. L’air chaud d’une montgolfière est moins dense que l’air extérieur ; un ballon à gaz utilise de l’hélium ou de l’hydrogène.</li>
+  <p class="lead">Les cinq thèmes du programme officiel du BIA (annexe 1 de l’arrêté du 19 février 2015, BO n° 11 du 12 mars 2015), dans le même ordre. Il existe aussi une épreuve facultative d’anglais sur le vocabulaire des thèmes 1, 3 et 4.</p>
+  <details open><summary>1. Météorologie et aérologie</summary><div class="in"><ul>
+    <li><b>L’atmosphère</b> : composition (environ 78 % d’azote et 21 % d’oxygène), pression, température, masse volumique. Atmosphère standard : 1013,25 hPa et 15 °C au niveau de la mer, puis environ −6,5 °C par 1000 m. La troposphère, où se forme la météo, s’arrête à la tropopause, vers 11 km en moyenne.</li>
+    <li><b>Humidité</b> : un air saturé en vapeur d’eau se condense. <b>Énergie</b> : la chaleur se transmet par conduction, convection (l’air chaud monte) et rayonnement. Une atmosphère instable favorise les nuages à fort développement vertical et les orages.</li>
+    <li><b>Masses d’air et fronts</b> : isobares (lignes d’égale pression), anticyclone (hautes pressions), dépression (basses pressions), col, dorsale, talweg, marais barométrique. Les perturbations sont liées aux fronts : chaud, froid, occlusion.</li>
+    <li><b>Nuages</b> : ils se forment quand l’air humide monte, se refroidit et se condense. Brouillard et brume sont des nuages au sol. Familles : cirrus (hauts), cumulus, stratus, cumulonimbus (orages), avec leurs précipitations.</li>
+    <li><b>Vents</b> : ils naissent des différences de pression et vont des hautes vers les basses pressions. La direction indique d’où le vent vient ; l’unité est le nœud. Vents locaux : brises de mer, de terre, de vallée.</li>
+    <li><b>Phénomènes dangereux</b> : turbulences, précipitations, orages, brumes et brouillards, givre. On étudie surtout leurs conséquences sur le vol.</li>
+    <li><b>Préparer un vol</b> : METAR (observation d’un aérodrome) et TAF (prévision d’un aérodrome).</li>
   </ul></div></details>
-  <details><summary>2. Étude des aéronefs et des engins spatiaux</summary><div class="in"><ul>
-    <li><b>Familles</b> : avions, hélicoptères, planeurs, ULM, aérostats (ballons, dirigeables), drones.</li>
-    <li><b>Parties d’un avion</b> : fuselage, voilure (ailes), empennage, train d’atterrissage, groupe motopropulseur. À l’intérieur de l’aile : longerons, nervures, revêtement.</li>
-    <li><b>Commandes</b> : le manche agit sur la profondeur et les ailerons, le palonnier sur la direction, la manette des gaz sur la puissance. Les volets augmentent la portance à basse vitesse.</li>
-    <li><b>Ailes</b> : droite, trapézoïdale, elliptique, en flèche, delta, à géométrie variable. Un avion à aile delta peut se passer d’empennage horizontal : ses élevons font ailerons et profondeur.</li>
-    <li><b>Moteurs</b> : à pistons (4 temps : admission, compression, combustion-détente, échappement), turbopropulseur, turboréacteur. Une fusée avance par réaction, en éjectant des gaz.</li>
-    <li><b>Instruments de base</b> : anémomètre (vitesse), altimètre, variomètre (vitesse verticale), horizon artificiel, conservateur de cap, indicateur de virage.</li>
-    <li><b>Hélicoptère</b> : le rotor principal donne portance et traction ; le rotor de queue compense la rotation du fuselage (anti-couple).</li>
-    <li><b>Espace</b> : lanceurs (Ariane, tirée de Kourou), satellites, station spatiale. L’orbite géostationnaire se trouve à environ 36 000 km d’altitude.</li>
+  <details><summary>2. Aérodynamique, aérostatique et principes du vol</summary><div class="in"><ul>
+    <li><b>L’aile</b> : bord d’attaque, bord de fuite, extrados (dessus), intrados (dessous), corde. Voilure : envergure, surface alaire, allongement, flèche, position haute ou basse, emplanture, saumon.</li>
+    <li><b>Forces aérodynamiques</b> : portance (Rz) et traînée (Rx). Rz = ½ × ρ × S × V² × Cz, avec ρ la masse volumique de l’air, S la surface alaire, V la vitesse et Cz le coefficient de portance.</li>
+    <li><b>Polaire</b> : incidence (angle entre la corde et le vent relatif), finesse (rapport portance sur traînée), décrochage au-delà de l’incidence critique, nombre de Mach (vitesse divisée par la vitesse du son).</li>
+    <li><b>Dispositifs de voilure</b> : hypersustentateurs (volets, becs) pour plus de portance à basse vitesse ; aérofreins (spoilers) pour plus de traînée.</li>
+    <li><b>Assiette, pente, incidence</b> : assiette = pente + incidence. Équilibre, stabilité et maniabilité se regardent autour des 3 axes : roulis, tangage, lacet.</li>
+    <li><b>Vol stabilisé</b> : vol plané (sans moteur, le poids fait avancer le planeur dans sa descente), palier (portance = poids, traction = traînée), virage en palier (facteur de charge, force centrifuge), montée et descente.</li>
+    <li><b>Aérostation</b> : ballons à air chaud (air moins dense que l’air extérieur) et ballons à gaz (hélium, hydrogène), grâce à la poussée d’Archimède.</li>
+    <li><b>Vol spatial</b> : trajectoire de lancement, mise en orbite, vols orbital et spatial. En orbite basse, la vitesse est d’environ 7,8 km/s.</li>
   </ul></div></details>
-  <details><summary>3. Météorologie et aérologie</summary><div class="in"><ul>
-    <li><b>Atmosphère</b> : la troposphère (où se forme la météo) va jusqu’à la tropopause, vers 11 km en moyenne, puis vient la stratosphère.</li>
-    <li><b>Pression</b> : elle baisse avec l’altitude. QNH : pression ramenée au niveau de la mer (l’altimètre indique l’altitude). QFE : pression du terrain (l’altimètre indique la hauteur). 1013 : calage standard pour les niveaux de vol.</li>
-    <li><b>Vent</b> : il souffle des hautes pressions (anticyclone, souvent beau temps) vers les basses pressions (dépression, souvent mauvais temps). Sa direction est celle d’où il vient. Unité : le nœud.</li>
-    <li><b>Nuages</b> : cirrus (hauts, en filaments), cumulus, stratus, cumulonimbus (orages, grêle, turbulences).</li>
-    <li><b>Dangers</b> : givrage, orages, turbulences, cisaillement de vent, brouillard.</li>
-    <li><b>Messages</b> : METAR (observation d’un aérodrome), TAF (prévision d’un aérodrome).</li>
+  <details><summary>3. Étude des aéronefs et des engins spatiaux</summary><div class="in"><ul>
+    <li><b>Classification</b> : aérostats (ballons, dirigeables) ; aérodynes à voilure fixe (avions, planeurs), souple (deltaplane, parapente) ou tournante (hélicoptères) ; engins aérospatiaux (lanceurs, fusées, vaisseaux) ; engins spatiaux (satellites, sondes).</li>
+    <li><b>Groupes motopropulseurs</b> : moteur à pistons (4 temps : admission, compression, combustion-détente, échappement), turboréacteur, statoréacteur, moteur-fusée, turbopropulseur, turbomoteur, moteur électrique. Une fusée avance par réaction.</li>
+    <li><b>Hélices et rotors</b> : calage (angle des pales), couple gyroscopique, souffle hélicoïdal. Sur un hélicoptère, le rotor principal donne portance et traction, le rotor de queue compense la rotation du fuselage. Objectifs actuels : moins de bruit, moins de carburant.</li>
+    <li><b>Structures et matériaux</b> : voilures (longerons, nervures, revêtement), empennages, fuselage, atterrisseurs (trains d’atterrissage, fixes ou rentrants).</li>
+    <li><b>Commandes de vol</b> : tangage (gouverne de profondeur), roulis (ailerons), lacet (gouverne de direction). Technologies : mécanique, hydraulique, électrique. Dans le cockpit : manche, palonnier, manette des gaz.</li>
+    <li><b>Instrumentation</b> : communication (radio), pilotage (anémomètre, altimètre, variomètre, horizon artificiel, conservateur de cap, indicateur de virage), navigation (GPS, radionavigation), surveillance (paramètres du moteur).</li>
+    <li><b>Autour de l’avion</b> : tube de Pitot (pression pour la vitesse), feux de navigation (rouge à gauche, vert à droite, blanc à l’arrière), phare d’atterrissage, antennes, train d’atterrissage.</li>
   </ul></div></details>
   <details><summary>4. Navigation, réglementation et sécurité des vols</summary><div class="in"><ul>
-    <li><b>Caps</b> : nord 000°, est 090°, sud 180°, ouest 270°. Le nord magnétique diffère du nord géographique (déclinaison).</li>
-    <li><b>Unités</b> : 1 mille nautique = 1852 m ; 1 nœud = 1 mille nautique par heure. Distance = vitesse × temps.</li>
-    <li><b>Cartes</b> : au 1/500 000, 1 cm représente 5 km. Position repérée par la latitude et la longitude.</li>
-    <li><b>Règles de l’air</b> : face à face, chacun vire à droite ; en croisement, priorité à l’avion qui vient de la droite ; le dépassement se fait par la droite.</li>
-    <li><b>Espaces aériens</b> : zones interdites (P), réglementées (R), dangereuses (D), contrôlées (CTR, TMA). Vol à vue (VFR) ou aux instruments (IFR).</li>
-    <li><b>Radio et urgence</b> : alphabet OACI (Alpha, Bravo, Charlie…), « Mayday » pour la détresse, « Pan pan » pour l’urgence. Transpondeur : 7700 urgence, 7600 panne radio, 7500 détournement.</li>
-    <li><b>Organismes</b> : OACI (international), EASA (Europe), DGAC (France). Sécurité : visite prévol, check-lists, facteurs humains.</li>
+    <li><b>Principes</b> : navigation à l’estime (calcul avec cap, vitesse et temps) et cheminement à vue (repères au sol). Route vraie et magnétique, cap vrai et magnétique, déclinaison (écart entre nord vrai et nord magnétique), déviation (écart dû au magnétisme de l’avion).</li>
+    <li><b>Mesures</b> : 1 mille nautique = 1852 m ; 1 nœud = 1 mille nautique par heure ; distance = vitesse × temps. Sur une carte au 1/500 000, 1 cm représente 5 km. Caps : nord 000°, est 090°, sud 180°, ouest 270°.</li>
+    <li><b>Régimes de vol</b> : vol à vue (VFR) et vol aux instruments (IFR). Outils : cartes aéronautiques, aides à la navigation.</li>
+    <li><b>Organisations</b> : DGAC (France), EASA (Europe), OACI (monde), fédérations délégataires, CNFAS.</li>
+    <li><b>Contrôle d’un aéronef</b> : entretien, carnet de route, certificat de navigabilité, visite prévol.</li>
+    <li><b>Espace aérien</b> : classes d’espaces, zones réglementées (R), interdites (P), dangereuses (D), aérodromes, contrôle aérien, hauteurs de survol. Règles de priorité : face à face, chacun vire à droite ; en croisement, priorité à l’avion qui vient de la droite ; dépassement par la droite.</li>
+    <li><b>Titres aéronautiques</b> : brevets, licences, qualifications.</li>
+    <li><b>Sécurité</b> : facteurs humains, accidentologie, culture de la sécurité, retour d’expérience (REX). Limites du pilote : hygiène de vie, stress, illusions sensorielles, hypoxie (manque d’oxygène en altitude). Prise de décision : repérer les situations à risque, comme l’« objectif destination ».</li>
+    <li><b>À connaître en plus</b> (souvent vu en cours, pas détaillé dans le programme) : « Mayday » pour la détresse, « Pan pan » pour l’urgence ; transpondeur 7700 urgence, 7600 panne radio, 7500 détournement.</li>
   </ul></div></details>
   <details><summary>5. Histoire et culture de l’aéronautique et du spatial</summary><div class="in"><ul>
-    <li><b>1783</b> : premiers vols habités en ballon (montgolfière des frères Montgolfier, puis ballon à hydrogène de Charles).</li>
-    <li><b>1890</b> : Clément Ader décolle avec l’Éole. <b>1903</b> : premier vol motorisé contrôlé des frères Wright. <b>1906</b> : le 14-bis de Santos-Dumont. <b>1909</b> : Blériot traverse la Manche.</li>
-    <li><b>1910</b> : Henri Fabre fait voler le premier hydravion. <b>1914-1918</b> : naissance de l’aviation militaire.</li>
-    <li><b>1927</b> : Lindbergh traverse l’Atlantique Nord en solitaire. Années 1920-1930 : l’Aéropostale, avec Mermoz et Saint-Exupéry.</li>
-    <li><b>1947</b> : Chuck Yeager franchit le mur du son. <b>1957</b> : Spoutnik, premier satellite. <b>1961</b> : Gagarine, premier homme dans l’espace. <b>1969</b> : Armstrong marche sur la Lune.</li>
-    <li><b>1976-2003</b> : Concorde en service commercial. <b>1982</b> : Jean-Loup Chrétien, premier Français dans l’espace. <b>1996</b> : Claudie Haigneré, première Française dans l’espace.</li>
-    <li><b>Acteurs</b> : CNES (1961), agence spatiale européenne ESA (1975), Airbus (1970).</li>
+    <li><b>Du mythe à la réalité</b> : mythe d’Icare, cerf-volant, projets de Léonard de Vinci, imitation de la nature, essor des ballons (1783), controverse entre plus légers et plus lourds que l’air.</li>
+    <li><b>Précurseurs et pionniers</b> : vol plané, 1890 Éole de Clément Ader, 1903 frères Wright (premier vol motorisé contrôlé), 1906 le 14-bis de Santos-Dumont, 1909 Blériot traverse la Manche, 1910 hydravion d’Henri Fabre.</li>
+    <li><b>Enjeux militaires</b> : première guerre mondiale (naissance de l’aviation militaire), seconde guerre mondiale (rôle décisif de l’avion), 1947 mur du son franchi par Chuck Yeager, lanceurs et conquête spatiale (1957 Spoutnik, 1961 Gagarine, 1969 Armstrong), automatismes et drones.</li>
+    <li><b>Enjeux économiques</b> : aviation commerciale (Concorde de 1976 à 2003, Airbus créé en 1970), industrie et diversité des métiers, applications civiles du spatial (GPS, télécommunications).</li>
+    <li><b>Enjeux socio-culturels</b> : aviation sportive et de loisir, grands raids (Aéropostale de Latécoère avec Mermoz et Saint-Exupéry, traversée de l’Atlantique par Lindbergh en 1927), littérature (Saint-Exupéry, Clostermann), cinéma, exploration de l’espace, retombées scientifiques (météo, médecine, cartographie).</li>
+    <li><b>Spatial français et européen</b> : CNES (1961), ESA (1975), Jean-Loup Chrétien premier Français dans l’espace (1982), Claudie Haigneré première Française (1996).</li>
   </ul></div></details>
 </section>
 
@@ -313,6 +347,14 @@ const PARTS={
   canard:["Canard","Petite aile avant","Placé devant l’aile principale, il aide à contrôler le tangage et améliore la maniabilité."],
   entree:["Entrée d’air","Alimente le réacteur","Elle amène l’air nécessaire au fonctionnement du réacteur, en le ralentissant avant le compresseur."],
   nez:["Nez et radar","Détection","Le radôme, à l’avant, protège l’antenne du radar tout en laissant passer les ondes."],
+  capot:["Capot moteur","Protège le moteur","Carénage qui enveloppe le moteur et guide l’air de refroidissement."],
+  pitot:["Tube de Pitot","Mesure la pression de l’air","Il capte la pression dynamique qui permet à l’anémomètre d’afficher la vitesse. Sur certains avions, il est chauffé pour éviter le givrage."],
+  feurouge:["Feu de navigation rouge","Côté gauche de l’avion","Le feu rouge est en bout d’aile gauche. Vu de dessous, la gauche de l’avion apparaît à droite sur l’image."],
+  feuvert:["Feu de navigation vert","Côté droit de l’avion","Le feu vert est en bout d’aile droite. Avec le rouge, il aide les autres pilotes à repérer la position et la direction de l’avion, surtout de nuit."],
+  feublanc:["Feu blanc arrière","Visible depuis l’arrière","Placé à l’arrière de l’avion, il complète les feux rouge et vert."],
+  phare:["Phare d’atterrissage","Éclaire la piste","Il éclaire la piste à l’atterrissage et rend l’avion plus visible. Selon les modèles, il se place dans le capot ou dans l’aile."],
+  antenne:["Antenne","Communication","Les antennes de la radio et du transpondeur sont souvent placées sous le fuselage."],
+  echappement:["Échappement","Évacue les gaz brûlés","Les gaz brûlés par le moteur à pistons sortent par le pot d’échappement, sous le capot."],
   tuyere:["Tuyère","Éjection des gaz","Les gaz chauds du réacteur sortent par la tuyère à grande vitesse : c’est ce qui produit la poussée."]
 };
 let view="top",mode="explore",queue=[],target=null,hits=0,total=0,missed=false;
@@ -395,7 +437,11 @@ const Q=[
  [2,"Que décrit un METAR ?",["La prévision à 24 h d’un aérodrome","L’observation météo d’un aérodrome","Le plan de vol","La carte des vents en altitude"],1,"Le METAR donne l’observation en cours ; le TAF donne la prévision."],
  [3,"Que signifie le code transpondeur 7700 ?",["Panne radio","Détournement","Urgence","Vol d’entraînement"],2,"7700 : urgence, 7600 : panne radio, 7500 : détournement."],
  [3,"Deux avions se rapprochent face à face. Que fait chaque pilote ?",["Il monte","Il vire à droite","Il vire à gauche","Il réduit les gaz"],1,"Dans les règles de l’air, chaque avion vire à droite."],
- [4,"Qui est le premier homme dans l’espace, en 1961 ?",["Neil Armstrong","Youri Gagarine","Alan Shepard","Thomas Pesquet"],1,"Youri Gagarine fait un tour de la Terre le 12 avril 1961."]
+ [4,"Qui est le premier homme dans l’espace, en 1961 ?",["Neil Armstrong","Youri Gagarine","Alan Shepard","Thomas Pesquet"],1,"Youri Gagarine fait un tour de la Terre le 12 avril 1961."],
+ [1,"Quelle est la couleur du feu de navigation en bout d’aile gauche ?",["Vert","Rouge","Blanc","Bleu"],1,"Rouge à gauche, vert à droite, blanc à l’arrière."],
+ [1,"À quoi sert le tube de Pitot ?",["À mesurer la température","À mesurer la pression pour calculer la vitesse","À indiquer le cap","À mesurer l’altitude"],1,"Le tube de Pitot capte la pression dynamique utilisée par l’anémomètre."],
+ [0,"À quoi servent les aérofreins ?",["À augmenter la vitesse","À augmenter la traînée pour ralentir","À faire monter l’avion","À régler le cap"],1,"Les aérofreins augmentent la traînée et permettent de ralentir ou de descendre plus vite."],
+ [0,"Quelle relation lie assiette, pente et incidence ?",["Assiette = pente + incidence","Assiette = pente − incidence","Incidence = assiette + pente","Pente = assiette + incidence"],0,"L’assiette (fuselage/horizon) est égale à la pente (trajectoire/horizon) plus l’incidence (corde/vent relatif)."]
 ];
 const body=$("#quizBody");
 let run=null;
@@ -441,7 +487,7 @@ function result(){
 /* ---------- Progression ---------- */
 function renderProgress(){
   const p=store.get();
-  const items=[["all","Quiz mélangé"],...CATS.map((c,i)=>["cat"+i,c]),["maquette-top","Maquette : avion léger, dessus"],["maquette-side","Maquette : avion léger, profil"],["maquette-jet","Maquette : avion de chasse"]];
+  const items=[["all","Quiz mélangé"],...CATS.map((c,i)=>["cat"+i,c]),["maquette-top","Maquette : avion léger, dessus"],["maquette-side","Maquette : avion léger, profil"],["maquette-under","Maquette : avion léger, dessous"],["maquette-jet","Maquette : avion de chasse"]];
   $("#rows").innerHTML=items.map(([k,t])=>{
     const v=p[k];
     return `<div class="row"><b>${t}</b><span>${v>=0?v+" %":"à faire"}</span><div class="prog"><i style="width:${v>=0?v:0}%"></i></div></div>`;

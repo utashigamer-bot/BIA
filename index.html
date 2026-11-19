@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BIA – Révisions du Brevet d’initiation aéronautique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#12304D;--sky:#1B4A74;--paper:#EEF2F6;--white:#fff;--line:#C9D5E1;--runway:#F2C230;--ok:#1F7A4D;--ko:#B8332F;--muted:#516579}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 "Barlow",system-ui,sans-serif}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;line-height:1.1;margin:0}
+h1{font-size:2.4rem}h2{font-size:1.7rem}h3{font-size:1.25rem}
+p{margin:.4em 0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--runway);outline-offset:2px}
+header{background:var(--ink);color:#fff;padding:14px 20px 0}
+.bar{max-width:1060px;margin:auto;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px}
+.brand{display:flex;align-items:center;gap:12px;padding-bottom:12px}
+.logo{font:700 1.7rem "Barlow Condensed",sans-serif;background:var(--runway);color:var(--ink);padding:2px 10px;border-radius:4px}
+.brand span{font-size:.95rem;color:#C5D6E6;max-width:21ch;line-height:1.25}
+nav{display:flex;gap:4px;overflow-x:auto}
+nav button{background:none;border:0;border-bottom:4px solid transparent;color:#C5D6E6;padding:10px 14px;font-weight:600;white-space:nowrap}
+nav button[aria-current=page]{color:#fff;border-bottom-color:var(--runway)}
+main{max-width:1060px;margin:auto;padding:26px 20px 50px}
+section[hidden]{display:none}
+.lead{color:var(--muted);max-width:60ch}
+.tools{display:flex;flex-wrap:wrap;gap:10px 22px;margin:18px 0 14px}
+.seg{display:inline-flex;border:2px solid var(--ink);border-radius:8px;overflow:hidden}
+.seg button{background:var(--white);border:0;padding:7px 16px;font-weight:600}
+.seg button+button{border-left:2px solid var(--ink)}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.lab{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:22px;align-items:start}
+@media(max-width:820px){.lab{grid-template-columns:1fr}}
+.blueprint{background:var(--sky);background-image:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:30px 30px;border-radius:10px;padding:10px}
+.blueprint svg{display:block;width:100%;height:auto;max-height:70vh}
+.part{fill:#C9D8E6;stroke:#6F93B3;stroke-width:1.5;cursor:pointer;transition:fill .15s}
+.part[data-id=cockpit]{fill:#8FB2CF}
+.part:hover{fill:#E3EDF6}
+.part.on{fill:var(--runway);stroke:#8A6A00}
+.part.ok{fill:#6FCF97}.part.ko{fill:#F08A85}
+.part:focus-visible{outline:none;stroke:#fff;stroke-width:3}
+.ground{stroke:#7FA0BF;stroke-width:2;stroke-dasharray:6 6}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:20px}
+.panel .role{color:var(--muted);font-weight:600;margin-bottom:6px}
+.axes{margin-top:18px;border-top:1px solid var(--line);padding-top:14px}
+.axes dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:8px 0 0;font-size:.95rem}
+.axes dt{font-weight:600}.axes dd{margin:0;color:var(--muted)}
+.btn{background:var(--ink);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:600}
+.btn:hover{background:var(--sky)}
+.btn.alt{background:var(--white);color:var(--ink);border:2px solid var(--ink)}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:18px}
+.cat{background:var(--white);border:2px solid var(--line);border-radius:10px;padding:14px 16px;text-align:left}
+.cat:hover{border-color:var(--ink)}
+.cat b{display:block;font:700 1.25rem "Barlow Condensed",sans-serif}
+.cat small{color:var(--muted)}
+.quiz{max-width:720px}
+.prog{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:6px 0 20px}
+.prog i{display:block;height:100%;background:var(--ink);width:0;transition:width .3s}
+.q{font:700 1.6rem/1.2 "Barlow Condensed",sans-serif;margin-bottom:16px}
+.opts{display:grid;gap:10px}
+.opt{background:var(--white);border:2px solid var(--line);border-radius:10px;padding:12px 16px;text-align:left}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.ok{border-color:var(--ok);background:#E5F5EC}
+.opt.ko{border-color:var(--ko);background:#FBE9E8}
+.opt:disabled{cursor:default}
+.fb{margin:16px 0;padding:12px 16px;border-left:5px solid var(--ink);background:var(--white);border-radius:0 8px 8px 0}
+.fb.ok{border-color:var(--ok)}.fb.ko{border-color:var(--ko)}
+.score{font:700 4rem "Barlow Condensed",sans-serif}
+.rows{display:grid;gap:14px;max-width:640px;margin-top:20px}
+.row{display:grid;grid-template-columns:1fr 60px;gap:4px 12px;align-items:center}
+.row .prog{grid-column:1/-1;margin:0}
+.row .prog i{background:var(--ok)}
+footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="brand"><div class="logo">BIA</div><span>Révisions du Brevet d’initiation aéronautique</span></div>
+    <nav aria-label="Sections">
+      <button data-tab="maquette">Maquette</button>
+      <button data-tab="quiz">Quiz</button>
+      <button data-tab="progression">Progression</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- MAQUETTE -->
+<section id="maquette">
+  <h1>Maquette d’avion</h1>
+  <p class="lead">Touche une pièce pour savoir à quoi elle sert, ou passe en mode entraînement pour tester ta mémoire.</p>
+  <div class="tools">
+    <div class="seg" role="group" aria-label="Vue">
+      <button data-view="top" aria-pressed="true">Vue de dessus</button>
+      <button data-view="side" aria-pressed="false">Vue de profil</button>
+    </div>
+    <div class="seg" role="group" aria-label="Mode">
+      <button data-mode="explore" aria-pressed="true">Explorer</button>
+      <button data-mode="test" aria-pressed="false">M’entraîner</button>
+    </div>
+  </div>
+  <div class="lab">
+    <div class="blueprint">
+      <svg class="view" data-view="top" viewBox="0 0 600 400" role="group" aria-label="Avion vu de dessus">
+        <defs>
+          <polygon id="wingR" points="326,150 570,175 570,205 326,215"/>
+          <polygon id="flapR" points="335,200.6 440,196.3 440,210.3 335,214.6"/>
+          <polygon id="ailR" points="450,196 570,191 570,205 450,210"/>
+          <polygon id="stabR" points="322,318 424,334 424,352 316,352"/>
+          <polygon id="elevR" points="317,339 424,343 424,352 316,352"/>
+        </defs>
+        <g class="part" data-id="aile" tabindex="0" role="button" aria-label="Aile"><use href="#wingR"/><use href="#wingR" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="volet" tabindex="0" role="button" aria-label="Volet"><use href="#flapR"/><use href="#flapR" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="aileron" tabindex="0" role="button" aria-label="Aileron"><use href="#ailR"/><use href="#ailR" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="stab" tabindex="0" role="button" aria-label="Stabilisateur horizontal"><use href="#stabR"/><use href="#stabR" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="profondeur" tabindex="0" role="button" aria-label="Gouverne de profondeur"><use href="#elevR"/><use href="#elevR" transform="matrix(-1 0 0 1 600 0)"/></g>
+        <g class="part" data-id="fuselage" tabindex="0" role="button" aria-label="Fuselage"><path d="M300 40C318 40 326 70 326 110L326 250L312 360L288 360L274 250L274 110C274 70 282 40 300 40Z"/></g>
+        <g class="part" data-id="cockpit" tabindex="0" role="button" aria-label="Cabine de pilotage"><rect x="287" y="95" width="26" height="42" rx="12"/></g>
+        <g class="part" data-id="derive" tabindex="0" role="button" aria-label="Dérive"><rect x="295" y="292" width="10" height="44"/></g>
+        <g class="part" data-id="direction" tabindex="0" role="button" aria-label="Gouverne de direction"><rect x="296" y="336" width="8" height="26"/></g>
+        <g class="part" data-id="helice" tabindex="0" role="button" aria-label="Hélice"><rect x="264" y="30" width="72" height="8" rx="4"/><circle cx="300" cy="42" r="8"/></g>
+      </svg>
+      <svg class="view" data-view="side" viewBox="0 0 600 300" role="group" aria-label="Avion vu de profil" hidden>
+        <line class="ground" x1="20" y1="254" x2="580" y2="254"/>
+        <g class="part" data-id="train" tabindex="0" role="button" aria-label="Train principal"><rect x="270" y="184" width="6" height="56"/><circle cx="273" cy="240" r="14"/></g>
+        <g class="part" data-id="trainavant" tabindex="0" role="button" aria-label="Train avant"><rect x="111" y="186" width="6" height="58"/><circle cx="114" cy="244" r="10"/></g>
+        <g class="part" data-id="fuselage" tabindex="0" role="button" aria-label="Fuselage"><path d="M70 160C70 130 110 120 160 118L400 128L540 150L540 172L400 180L160 190C110 190 70 185 70 160Z"/></g>
+        <g class="part" data-id="cockpit" tabindex="0" role="button" aria-label="Cabine de pilotage"><path d="M170 119C185 92 235 92 255 123Z"/></g>
+        <g class="part" data-id="aile" tabindex="0" role="button" aria-label="Aile"><rect x="205" y="180" width="150" height="7" rx="3.5"/></g>
+        <g class="part" data-id="stab" tabindex="0" role="button" aria-label="Empennage horizontal"><rect x="495" y="146" width="80" height="8" rx="4"/></g>
+        <g class="part" data-id="derive" tabindex="0" role="button" aria-label="Dérive"><polygon points="480,142 515,72 540,72 540,150"/></g>
+        <g class="part" data-id="direction" tabindex="0" role="button" aria-label="Gouverne de direction"><polygon points="540,72 562,74 552,152 540,150"/></g>
+        <g class="part" data-id="helice" tabindex="0" role="button" aria-label="Hélice"><ellipse cx="64" cy="160" rx="5" ry="62"/></g>
+      </svg>
+    </div>
+    <div>
+      <div class="panel" id="info" aria-live="polite"></div>
+      <div class="panel axes">
+        <h3>Les trois axes de rotation</h3>
+        <dl>
+          <dt>Roulis</dt><dd>ailerons, autour de l’axe longitudinal</dd>
+          <dt>Tangage</dt><dd>gouverne de profondeur, autour de l’axe transversal</dd>
+          <dt>Lacet</dt><dd>gouverne de direction, autour de l’axe vertical</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" hidden>
+  <h1>Quiz</h1>
+  <div id="quizBody" class="quiz"></div>
+</section>
+
+<!-- PROGRESSION -->
+<section id="progression" hidden>
+  <h1>Progression</h1>
+  <p class="lead">Ton meilleur score pour chaque quiz. Les résultats restent enregistrés sur cet appareil.</p>
+  <div class="rows" id="rows"></div>
+  <p><button class="btn alt" id="reset">Effacer ma progression</button></p>
+</section>
+</main>
+<footer>Outil de révision non officiel. Vérifie toujours avec ton cours du BIA.</footer>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const store={
+  get(){try{return JSON.parse(localStorage.getItem("bia-progress"))||{}}catch(e){return {}}},
+  set(o){try{localStorage.setItem("bia-progress",JSON.stringify(o))}catch(e){}}
+};
+function saveBest(key,pct){const p=store.get();if(!(p[key]>=pct)){p[key]=pct;store.set(p)}}
+
+/* ---------- Navigation ---------- */
+function showTab(t){
+  if(!$("#"+t))t="maquette";
+  $$("main > section").forEach(s=>s.hidden=s.id!==t);
+  $$("nav button").forEach(b=>{if(b.dataset.tab===t)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
+  if(t==="progression")renderProgress();
+  if(t==="quiz"&&!$("#quizBody").children.length)quizHome();
+  history.replaceState(null,"","#"+t);
+}
+$$("nav button").forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+
+/* ---------- Maquette ---------- */
+const PARTS={
+  helice:["Hélice","Organe de traction","Elle tourne grâce au moteur et tire l’avion vers l’avant : c’est la traction."],
+  fuselage:["Fuselage","Corps de l’avion","Il relie les ailes et l’empennage, et abrite l’équipage, les passagers et la charge."],
+  cockpit:["Cabine de pilotage","Poste du pilote","Le pilote y trouve les commandes de vol et les instruments."],
+  aile:["Aile","Produit la portance","Son profil et l’écoulement de l’air créent la portance, la force qui s’oppose au poids."],
+  aileron:["Aileron","Commande le roulis","Situé en bout d’aile. Les deux ailerons se braquent en sens opposés : l’avion s’incline à gauche ou à droite."],
+  volet:["Volet","Augmente la portance","Surface mobile du bord de fuite de l’aile. Sortie au décollage et à l’atterrissage, elle permet de voler plus lentement."],
+  stab:["Stabilisateur horizontal","Stabilité en tangage","Partie fixe de l’empennage. Elle empêche le nez de monter et descendre de façon incontrôlée."],
+  profondeur:["Gouverne de profondeur","Commande le tangage","Partie mobile du stabilisateur. Elle fait cabrer (nez vers le haut) ou piquer (nez vers le bas) l’avion."],
+  derive:["Dérive","Stabilité en lacet","Partie fixe verticale de l’empennage. Elle garde l’avion aligné avec le vent relatif."],
+  direction:["Gouverne de direction","Commande le lacet","Actionnée par le palonnier, elle fait pivoter le nez à gauche ou à droite."],
+  train:["Train principal","Roule au sol","Les roues principales supportent l’essentiel du poids de l’avion au sol, au décollage et à l’atterrissage."],
+  trainavant:["Train avant","Oriente l’avion au sol","La roue avant guide l’avion pendant le roulage."]
+};
+let view="top",mode="explore",queue=[],target=null,hits=0,total=0,missed=false;
+const info=$("#info");
+
+function renderInfo(id){
+  if(!id){info.innerHTML="<h2>Choisis une pièce</h2><p>Touche l’avion pour afficher sa fiche.</p>";return}
+  const [n,r,t]=PARTS[id];
+  info.innerHTML=`<h2>${n}</h2><p class="role">${r}</p><p>${t}</p>`;
+}
+function mark(id,cls){$$(`.part[data-id="${id}"]`).forEach(p=>{p.classList.add(cls);setTimeout(()=>p.classList.remove(cls),700)})}
+function select(id){$$(".part").forEach(p=>p.classList.toggle("on",p.dataset.id===id))}
+function setView(v){
+  view=v;
+  $$(".view").forEach(s=>s.hidden=s.dataset.view!==v);
+  $$("[data-view]",$(".tools")).forEach(b=>b.setAttribute("aria-pressed",b.dataset.view===v));
+  setMode(mode);
+}
+function setMode(m){
+  mode=m;
+  $$("[data-mode]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.mode===m));
+  select(null);
+  if(m==="explore")renderInfo(null);else startTest();
+}
+function startTest(){
+  queue=shuffle($$(`.view[data-view="${view}"] .part`).map(p=>p.dataset.id));
+  total=queue.length;hits=0;nextTarget();
+}
+function nextTarget(){
+  missed=false;target=queue.shift();
+  if(!target){
+    const pct=Math.round(hits/total*100);saveBest("maquette-"+view,pct);
+    info.innerHTML=`<h2>${hits} sur ${total}</h2><p>Pièces trouvées du premier coup.</p><p><button class="btn" id="again">Recommencer</button></p>`;
+    $("#again").onclick=startTest;return;
+  }
+  info.innerHTML=`<p class="role">Pièce ${total-queue.length} sur ${total}</p><h2>Touche : ${PARTS[target][0]}</h2><p id="hint"></p>`;
+}
+$$(".part").forEach(p=>{
+  const act=()=>{
+    const id=p.dataset.id;
+    if(mode==="explore"){select(id);renderInfo(id);return}
+    if(!target)return;
+    if(id===target){if(!missed)hits++;mark(id,"ok");setTimeout(nextTarget,650)}
+    else{missed=true;mark(id,"ko");$("#hint").textContent="Ce n’est pas ça : tu as touché « "+PARTS[id][0]+" ». Cherche encore."}
+  };
+  p.addEventListener("click",act);
+  p.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();act()}});
+});
+$$("[data-view]",$(".tools")).forEach(b=>b.onclick=()=>setView(b.dataset.view));
+$$("[data-mode]").forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+
+/* ---------- Quiz ---------- */
+const CATS=["Aérodynamique","Aéronefs et instruments","Météorologie","Navigation et règles","Histoire de l’aviation"];
+const Q=[
+ [0,"Quelle force s’oppose au poids et maintient l’avion en l’air ?",["La traînée","La portance","La traction","L’inertie"],1,"La portance est créée surtout par les ailes et s’oppose au poids."],
+ [0,"Quelle force est produite par l’hélice ou le réacteur ?",["La portance","Le poids","La traction","La traînée"],2,"La traction (ou poussée) fait avancer l’avion. La traînée, elle, le freine."],
+ [0,"Que se passe-t-il quand l’incidence dépasse l’incidence critique ?",["L’avion accélère","Le décrochage","La traînée disparaît","L’avion se stabilise"],1,"Au-delà de l’incidence critique, l’écoulement se décolle et la portance chute : c’est le décrochage."],
+ [0,"Quelle gouverne provoque le mouvement de roulis ?",["Les ailerons","La profondeur","La direction","Les volets"],0,"Les ailerons font rouler l’avion autour de son axe longitudinal."],
+ [1,"Quel mouvement la gouverne de profondeur commande-t-elle ?",["Le roulis","Le lacet","Le tangage","La vrille"],2,"La profondeur fait cabrer ou piquer l’avion : c’est le tangage."],
+ [1,"À quoi servent les volets ?",["À virer à gauche ou à droite","À augmenter la portance à basse vitesse","À freiner sur la piste","À diminuer le poids"],1,"Sortis au décollage et à l’atterrissage, ils augmentent la portance et permettent de voler plus lentement."],
+ [1,"Quel instrument indique la vitesse de l’avion par rapport à l’air ?",["L’altimètre","Le variomètre","L’anémomètre","L’horizon artificiel"],2,"L’anémomètre (ou badin) mesure la vitesse air grâce à la pression dynamique."],
+ [1,"Que mesure le variomètre ?",["La vitesse horizontale","La vitesse verticale","Le cap","L’altitude"],1,"Le variomètre indique si l’avion monte ou descend, et à quelle vitesse."],
+ [2,"Quelle est la pression atmosphérique standard au niveau de la mer ?",["1013,25 hPa","760 hPa","1500 hPa","980 hPa"],0,"L’atmosphère standard (OACI) fixe la pression au niveau de la mer à 1013,25 hPa."],
+ [2,"En atmosphère standard, de combien la température baisse-t-elle environ tous les 1000 m ?",["1 °C","6,5 °C","15 °C","0,65 °C"],1,"Le gradient standard est d’environ 6,5 °C par 1000 m, soit à peu près 2 °C par 1000 ft."],
+ [2,"Un vent de 270° souffle depuis quelle direction ?",["Le nord","L’est","Le sud","L’ouest"],3,"Un vent est nommé d’après la direction d’où il vient : 270° correspond à l’ouest."],
+ [2,"Quel nuage est typique des orages ?",["Le cirrus","Le stratus","Le cumulonimbus","L’altocumulus"],2,"Le cumulonimbus est un nuage à fort développement vertical, source d’orages, de grêle et de turbulences."],
+ [3,"Quel cap correspond à l’est ?",["000°","090°","180°","270°"],1,"Nord 000°, est 090°, sud 180°, ouest 270°."],
+ [3,"Combien de mètres vaut un mille nautique ?",["1000 m","1609 m","1852 m","2000 m"],2,"Un mille nautique vaut 1852 m. C’est l’unité de distance de la navigation aérienne."],
+ [3,"Que signifie OACI ?",["Organisation de l’aviation civile internationale","Office aéronautique de contrôle des instruments","Organisation des aéroports et clubs d’initiation","Observatoire de l’air et des courants"],0,"L’OACI est l’agence de l’ONU qui fixe les standards internationaux de l’aviation civile."],
+ [3,"Sur une carte au 1/500 000, 1 cm représente…",["500 m","5 km","50 km","500 km"],1,"1 cm × 500 000 = 500 000 cm = 5 km."],
+ [4,"Qui réalise en 1903 le premier vol motorisé contrôlé d’un plus lourd que l’air ?",["Louis Blériot","Alberto Santos-Dumont","Les frères Wright","Clément Ader"],2,"Orville et Wilbur Wright volent le 17 décembre 1903 à Kitty Hawk, aux États-Unis."],
+ [4,"En quelle année Louis Blériot traverse-t-il la Manche en avion ?",["1903","1909","1914","1927"],1,"Blériot relie Calais à Douvres le 25 juillet 1909."],
+ [4,"En quelle année Charles Lindbergh traverse-t-il l’Atlantique Nord en solitaire et sans escale ?",["1909","1919","1927","1939"],2,"En mai 1927, Lindbergh relie New York à Paris à bord du Spirit of St. Louis."],
+ [4,"En quelle année le Concorde commence-t-il ses vols commerciaux ?",["1969","1976","1984","1990"],1,"Le premier vol d’essai date de 1969, mais les vols commerciaux débutent en 1976."]
+];
+const body=$("#quizBody");
+let run=null;
+
+function quizHome(){
+  const p=store.get();
+  const btn=(k,t,sub)=>`<button class="cat" data-k="${k}"><b>${t}</b><small>${sub}${p[k]>=0?" · meilleur score "+p[k]+" %":""}</small></button>`;
+  body.innerHTML=`<p class="lead">Choisis un thème, ou lance un quiz mélangé de 10 questions.</p><div class="cats">`+
+    btn("all","Tout mélangé","10 questions")+
+    CATS.map((c,i)=>btn("cat"+i,c,Q.filter(q=>q[0]===i).length+" questions")).join("")+`</div>`;
+  $$(".cat",body).forEach(b=>b.onclick=()=>startQuiz(b.dataset.k));
+}
+function startQuiz(k){
+  const pool=k==="all"?shuffle(Q).slice(0,10):shuffle(Q.filter(q=>"cat"+q[0]===k));
+  run={k,list:pool,i:0,score:0};showQ();
+}
+function showQ(){
+  const [c,q,opts,ok]=run.list[run.i];
+  const order=shuffle(opts.map((t,i)=>[t,i===ok]));
+  body.innerHTML=`<p class="lead">${CATS[c]} · question ${run.i+1} sur ${run.list.length}</p>
+   <div class="prog"><i style="width:${run.i/run.list.length*100}%"></i></div>
+   <div class="q">${q}</div><div class="opts">`+order.map(([t,g],i)=>`<button class="opt" data-g="${g?1:0}">${t}</button>`).join("")+`</div><div id="fb"></div>`;
+  $$(".opt",body).forEach(b=>b.onclick=()=>answer(b));
+}
+function answer(b){
+  const good=b.dataset.g==="1";
+  if(good)run.score++;
+  $$(".opt",body).forEach(o=>{o.disabled=true;if(o.dataset.g==="1")o.classList.add("ok")});
+  if(!good)b.classList.add("ko");
+  const last=run.i===run.list.length-1;
+  $("#fb").innerHTML=`<div class="fb ${good?"ok":"ko"}"><b>${good?"Bonne réponse.":"Pas tout à fait."}</b> ${run.list[run.i][4]}</div><button class="btn" id="next">${last?"Voir mon score":"Question suivante"}</button>`;
+  $("#next").focus();
+  $("#next").onclick=()=>{run.i++;last?result():showQ()};
+}
+function result(){
+  const pct=Math.round(run.score/run.list.length*100);
+  saveBest(run.k,pct);
+  const msg=pct>=80?"Excellent, tu maîtrises ce thème.":pct>=50?"Bien parti. Relis les explications et réessaie.":"Reprends le cours sur ce thème, puis relance le quiz.";
+  body.innerHTML=`<div class="score">${run.score} / ${run.list.length}</div><p>${msg}</p><p><button class="btn" id="redo">Rejouer ce quiz</button> <button class="btn alt" id="home">Choisir un autre thème</button></p>`;
+  $("#redo").onclick=()=>startQuiz(run.k);$("#home").onclick=quizHome;
+}
+
+/* ---------- Progression ---------- */
+function renderProgress(){
+  const p=store.get();
+  const items=[["all","Quiz mélangé"],...CATS.map((c,i)=>["cat"+i,c]),["maquette-top","Maquette : vue de dessus"],["maquette-side","Maquette : vue de profil"]];
+  $("#rows").innerHTML=items.map(([k,t])=>{
+    const v=p[k];
+    return `<div class="row"><b>${t}</b><span>${v>=0?v+" %":"à faire"}</span><div class="prog"><i style="width:${v>=0?v:0}%"></i></div></div>`;
+  }).join("");
+}
+$("#reset").onclick=()=>{if(confirm("Effacer toute ta progression ?")){store.set({});renderProgress();quizHome()}};
+
+/* ---------- Démarrage ---------- */
+setView("top");
+showTab(location.hash.slice(1)||"maquette");
+</script>
+</body>
+</html>

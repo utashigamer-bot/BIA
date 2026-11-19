@@ -2,7 +2,8 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12304D">
 <title>BIA – Révisions du Brevet d’initiation aéronautique</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +18,7 @@ h1{font-size:2.4rem}h2{font-size:1.7rem}h3{font-size:1.25rem}
 p{margin:.4em 0}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:3px solid var(--runway);outline-offset:2px}
-header{background:var(--ink);color:#fff;padding:14px 20px 0}
+header{background:var(--ink);color:#fff;padding:calc(14px + env(safe-area-inset-top)) 20px 0;position:sticky;top:0;z-index:10}
 .bar{max-width:1060px;margin:auto;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 24px}
 .brand{display:flex;align-items:center;gap:12px;padding-bottom:12px}
 .logo{font:700 1.7rem "Barlow Condensed",sans-serif;background:var(--runway);color:var(--ink);padding:2px 10px;border-radius:4px}
@@ -39,7 +40,7 @@ section[hidden]{display:none}
 .blueprint svg{display:block;width:100%;height:auto;max-height:70vh}
 .part{fill:#C9D8E6;stroke:#6F93B3;stroke-width:1.5;cursor:pointer;transition:fill .15s}
 .part[data-id=cockpit]{fill:#8FB2CF}
-.part:hover{fill:#E3EDF6}
+@media(hover:hover){.part:hover{fill:#E3EDF6}}
 .part.on{fill:var(--runway);stroke:#8A6A00}
 .part.ok{fill:#6FCF97}.part.ko{fill:#F08A85}
 .part:focus-visible{outline:none;stroke:#fff;stroke-width:3}
@@ -50,11 +51,11 @@ section[hidden]{display:none}
 .axes dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:8px 0 0;font-size:.95rem}
 .axes dt{font-weight:600}.axes dd{margin:0;color:var(--muted)}
 .btn{background:var(--ink);color:#fff;border:0;border-radius:8px;padding:10px 20px;font-weight:600}
-.btn:hover{background:var(--sky)}
+@media(hover:hover){.btn:hover{background:var(--sky)}}
 .btn.alt{background:var(--white);color:var(--ink);border:2px solid var(--ink)}
 .cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:18px}
 .cat{background:var(--white);border:2px solid var(--line);border-radius:10px;padding:14px 16px;text-align:left}
-.cat:hover{border-color:var(--ink)}
+@media(hover:hover){.cat:hover{border-color:var(--ink)}}
 .cat b{display:block;font:700 1.25rem "Barlow Condensed",sans-serif}
 .cat small{color:var(--muted)}
 .quiz{max-width:720px}
@@ -63,7 +64,7 @@ section[hidden]{display:none}
 .q{font:700 1.6rem/1.2 "Barlow Condensed",sans-serif;margin-bottom:16px}
 .opts{display:grid;gap:10px}
 .opt{background:var(--white);border:2px solid var(--line);border-radius:10px;padding:12px 16px;text-align:left}
-.opt:hover:not(:disabled){border-color:var(--ink)}
+@media(hover:hover){.opt:hover:not(:disabled){border-color:var(--ink)}}
 .opt.ok{border-color:var(--ok);background:#E5F5EC}
 .opt.ko{border-color:var(--ko);background:#FBE9E8}
 .opt:disabled{cursor:default}
@@ -85,6 +86,23 @@ details ul{margin:.3em 0;padding-left:1.2em}details li{margin:.3em 0}
 .w .ghost{opacity:.45;stroke-dasharray:3 2}
 .w p{font-size:.92rem;color:var(--muted)}
 .gal{margin-top:34px}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{-webkit-tap-highlight-color:transparent;overflow-x:hidden;padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+button,summary,svg,.part{touch-action:manipulation;-webkit-user-select:none;user-select:none}
+button,summary{min-height:44px}
+.part[data-id=derive],.part[data-id=direction]{stroke-width:5;stroke-linejoin:round}
+@media(max-width:600px){
+  body{font-size:16px}h1{font-size:2rem}
+  main{padding:20px 14px 40px}
+  .bar{flex-direction:column;align-items:stretch;gap:0}
+  .brand{padding-bottom:6px}
+  nav{margin:0 -14px;padding:0 6px}
+  .seg{width:100%}.seg button{flex:1;padding:9px 6px;font-size:.9rem}
+  .blueprint{padding:6px}.panel{padding:16px}
+  .q{font-size:1.4rem}.score{font-size:3.2rem}
+  .btn{width:100%;margin-bottom:8px}
+  .row{grid-template-columns:1fr 56px}
+}
 footer{text-align:center;color:var(--muted);font-size:.9rem;padding:0 20px 30px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
